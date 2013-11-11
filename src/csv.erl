@@ -5,14 +5,12 @@
 convert(B) ->
     BB = binary_to_list(B),
     
-    try 
-        list_to_integer(BB) 
+    try list_to_integer(BB)
     catch
-        Exception:Reason -> 
-                  try 
-                        list_to_float(BB)  
+        Error:Reason -> 
+                  try list_to_float(BB)
                   catch 
-                    Exception:Reason -> BB 
+                    Error:Reason -> BB 
                   end 
     end.
 
@@ -21,5 +19,5 @@ readlines(FileName) ->
     Binary.
 
 
-convert_string(B) -> [ list_to_tuple([ convert(E) || E <- binary:split(L,<<",">>,[global]) ])  || L <- binary:split(B,<<"\n">>,[global])].
+parse_csv(B) -> [ list_to_tuple([ convert(E) || E <- binary:split(L,<<",">>,[global]) ])  || L <- binary:split(B,<<"\n">>,[global])].
 
