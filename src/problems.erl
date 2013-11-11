@@ -1,5 +1,6 @@
 -module(problems).
 -compile([export_all]).
+-include_lib("eunit/include/eunit.hrl").
 
 
 r_helper([],Acc) -> Acc;
@@ -30,7 +31,9 @@ s_length([],Acc) -> Acc;
 s_length([_|T],Acc) -> s_length(T,1+Acc).
 
 s_permute([],_,Acc) -> Acc;
-s_permute(L,Len,Acc)  -> ID = random:uniform(Len), s_permute(delete(L,ID),Len-1,[find(L,ID)|Acc]).  
+s_permute(L,Len,Acc)  -> 
+	ID = random:uniform(Len), 
+	s_permute(delete(L,ID),Len-1,[find(L,ID)|Acc]).  
 
 permute(L) -> s_permute(L,s_length(L,0),[]).
 
@@ -47,6 +50,7 @@ rle_encode([H|T],[{H,C1}|T1]) -> rle_encode(T,[{H,C1+1}|T1]);
 rle_encode([H|T],[H|T1])      -> rle_encode(T,[{H,2}|T1]);
 rle_encode([H|T],Acc)         -> rle_encode(T,[H|Acc]).
 
+
 encode(L) -> reverse(rle_encode(L,[])).
 
 rle_decode([],Acc)        -> Acc;
@@ -58,3 +62,7 @@ rle_decode([S|T],Acc)     -> rle_decode(T,[S|Acc]).
 decode(L) -> reverse(rle_decode(L,[])). 
 
 
+problems_test() -> 
+	?assertEqual(1,1),
+    ?assertEqual([3,2,1],reverse([1,2,3])),
+	?assertError(badarg,erlang:round(abc)).
