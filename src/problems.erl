@@ -1,5 +1,6 @@
 -module(problems).
 -compile([export_all]).
+-include_lib("proper/include/proper.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
 
@@ -62,7 +63,13 @@ rle_decode([S|T],Acc)     -> rle_decode(T,[S|Acc]).
 decode(L) -> reverse(rle_decode(L,[])). 
 
 
+prop_delete() ->
+    ?FORALL({X,L}, {integer(),list(integer())},
+        not lists:member(X, lists:delete(X, L))).
+
+
 problems_test() -> 
 	?assertEqual(1,1),
     ?assertEqual([3,2,1],reverse([1,2,3])),
 	?assertError(badarg,erlang:round(abc)).
+    ?assertEqual([],proper:module(?MODULE, [{to_file, user},{numtests, 1000}])).
