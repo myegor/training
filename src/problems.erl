@@ -44,13 +44,16 @@ flatten(L) -> reverse(s_flatten(L,[])).
 
 rle_encode([],Acc)            -> Acc;
 rle_encode([H|T],[{H,C1}|T1]) -> rle_encode(T,[{H,C1+1}|T1]);
-rle_encode([H|T],Acc)         -> rle_encode(T,[{H,1}|Acc]).
+rle_encode([H|T],[H|T1])      -> rle_encode(T,[{H,2}|T1]);
+rle_encode([H|T],Acc)         -> rle_encode(T,[H|Acc]).
 
 encode(L) -> reverse(rle_encode(L,[])).
 
 rle_decode([],Acc)        -> Acc;
 rle_decode([{S,1}|T],Acc) -> rle_decode(T,[S|Acc]);
-rle_decode([{S,C}|T],Acc) -> rle_decode([{S,C-1}|T],[S|Acc]).
+rle_decode([{S,C}|T],Acc) -> rle_decode([{S,C-1}|T],[S|Acc]);
+rle_decode([S|T],Acc)     -> rle_decode(T,[S|Acc]).
+
 
 decode(L) -> reverse(rle_decode(L,[])). 
 
