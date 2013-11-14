@@ -67,9 +67,17 @@ prop_delete() ->
     ?FORALL({X,L}, {integer(),list(integer())},
         not lists:member(X, lists:delete(X, L))).
 
+%p_reverse([])    -> reverse([]) == [];
+%p_reverse([H|T]) -> Len = lists:length(L) , (H == find(reverse([H|T]),length(Len))) and p_reverse(T).
+
+%prop_reverse() ->
+%    ?FORALL(L, list(integer(),
+%        p_reverse(L)).
+
+
 
 problems_test() -> 
 	?assertEqual(1,1),
     ?assertEqual([3,2,1],reverse([1,2,3])),
 	?assertError(badarg,erlang:round(abc)).
-    ?assertEqual([],proper:module(?MODULE, [{to_file, user},{numtests, 1000}])).
+%    ?assertEqual([],proper:module(?MODULE, [{to_file, user},{numtests, 1000}])).
