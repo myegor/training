@@ -24,6 +24,7 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
+    {ok,Port} = application:get_env(myapp,telnet_port),
     {ok, { {one_for_all, 5, 10}, 
             [
              ?CHILD(tmp,worker),

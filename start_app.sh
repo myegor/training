@@ -1,4 +1,4 @@
 #i/bin/sh
 
-erl -pa ebin deps/*/ebin -boot start_sasl -s myapp_app
+erl -pa ebin deps/*/ebin -boot start_sasl -s myapp_app -config priv/app
 
